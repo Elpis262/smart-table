@@ -28,29 +28,29 @@ export function initFiltering(elements, indexes) {
 
         // @todo: #4.3 — настроить компаратор
         const customRules = [
-    (key, sourceValue, targetValue) => {
-        if (key === 'totalFrom' && targetValue !== '' && targetValue !== undefined) {
-            const sourceNum = parseFloat(sourceValue);
-            const targetNum = parseFloat(targetValue);
-            if (!isNaN(sourceNum) && !isNaN(targetNum)) {
-                return { result: sourceNum >= targetNum };
+            (key, sourceValue, targetValue) => {
+                if (key === 'totalFrom' && targetValue !== '' && targetValue !== undefined) {
+                    const sourceNum = parseFloat(sourceValue);
+                    const targetNum = parseFloat(targetValue);
+                    if (!isNaN(sourceNum) && !isNaN(targetNum)) {
+                        return { result: sourceNum >= targetNum };
+                    }
+                }
+                return { continue: true };
+            },
+            (key, sourceValue, targetValue) => {
+                if (key === 'totalTo' && targetValue !== '' && targetValue !== undefined) {
+                    const sourceNum = parseFloat(sourceValue);
+                    const targetNum = parseFloat(targetValue);
+                    if (!isNaN(sourceNum) && !isNaN(targetNum)) {
+                        return { result: sourceNum <= targetNum };
+                    }
+                }
+                return { continue: true };
             }
-        }
-        return { continue: true };
-    },
-    (key, sourceValue, targetValue) => {
-        if (key === 'totalTo' && targetValue !== '' && targetValue !== undefined) {
-            const sourceNum = parseFloat(sourceValue);
-            const targetNum = parseFloat(targetValue);
-            if (!isNaN(sourceNum) && !isNaN(targetNum)) {
-                return { result: sourceNum <= targetNum };
-            }
-        }
-        return { continue: true };
-    }
-];
+        ];
 
-const compare = createComparison(defaultRules, customRules);
+        const compare = createComparison(defaultRules, customRules);
 
         // @todo: #4.5 — отфильтровать данные используя компаратор
         return data.filter(row => compare(row, state));
