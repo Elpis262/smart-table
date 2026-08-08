@@ -1,6 +1,5 @@
 import {createComparison, defaultRules} from "../lib/compare.js";
 
-
 export function initFiltering(elements, indexes) {
     // @todo: #4.1 — заполнить выпадающие списки опциями
     Object.keys(indexes).forEach((elementName) => {
@@ -28,9 +27,9 @@ export function initFiltering(elements, indexes) {
 
         // @todo: #4.3 — настроить компаратор
         const customRules = [
-            (key, sourceValue, targetValue) => {
-                if (key === 'totalFrom' && targetValue !== '' && targetValue !== undefined) {
-                    const sourceNum = parseFloat(sourceValue);
+            (key, sourceValue, targetValue, source) => {
+                if (key === 'totalFrom' && targetValue !== '' && targetValue !== undefined && targetValue !== null) {
+                    const sourceNum = parseFloat(source.total);
                     const targetNum = parseFloat(targetValue);
                     if (!isNaN(sourceNum) && !isNaN(targetNum)) {
                         return { result: sourceNum >= targetNum };
@@ -38,9 +37,9 @@ export function initFiltering(elements, indexes) {
                 }
                 return { continue: true };
             },
-            (key, sourceValue, targetValue) => {
-                if (key === 'totalTo' && targetValue !== '' && targetValue !== undefined) {
-                    const sourceNum = parseFloat(sourceValue);
+            (key, sourceValue, targetValue, source) => {
+                if (key === 'totalTo' && targetValue !== '' && targetValue !== undefined && targetValue !== null) {
+                    const sourceNum = parseFloat(source.total);
                     const targetNum = parseFloat(targetValue);
                     if (!isNaN(sourceNum) && !isNaN(targetNum)) {
                         return { result: sourceNum <= targetNum };
